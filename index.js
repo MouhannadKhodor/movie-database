@@ -107,3 +107,35 @@ router.get('/movies/read/id/:id', function(req, res) {
     res.send(`{status:200, data:${JSON.stringify(movies[id])}}`);
 }
  });
+
+router.get('/movies/add', function(req, res) {
+    if(req.query.title && req.query.year && isNaN(req.query.year)===false && req.query.year.length===4 && req.query.rating){
+     
+
+        let title=req.query.title;
+        let year=req.query.year;
+        let rating=req.query.rating;
+        let movie={title:title,year:year,rating:rating};  
+
+        movies.push(movie);
+
+    
+    res.send({status:200, message: movies});
+
+    
+    }else if(req.query.title && req.query.year && isNaN (req.query.year) == false && req.query.year.length === 4){
+
+    let rating=4;
+    let title=req.query.title;
+    let year=req.query.year;
+    let movie={title:title,year:year,rating:rating};
+    movies.push(movie);
+    res.send({status:200, message: movies});
+
+
+    }else{
+        res.status(403)
+      res.send({status:403, error:true, message:'you cannot create a movie without providing a title and a year '});
+    }
+});
+

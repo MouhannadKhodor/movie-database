@@ -1,4 +1,5 @@
 import express from 'express'
+import { exit } from 'process';
 import url from 'url'
 let app = express();
 let port = process.env.port || 3000;
@@ -140,15 +141,33 @@ router.get('/movies/add', function(req, res) {
 });
 
 router.get('/movies/delete/:id', function(req, res) {
-    const mvs = movies
     var d = req.params.id
-    if (d > mvs.length -1){
+    if (d > movies.length -1){
         res.status(404)
-       res.send( {status:404, error:true, message:'the movie <ID> does not exist'})
+       res.send( {status:404, error:true, message:`the movie ${d} does not exist`})
     }
     else{
-        mvs.splice(d,1);
-        res.send(`{status:200, data:${JSON.stringify(mvs)}}`);
+        movies.splice(d,1);
+        res.send(`{status:200, data:${JSON.stringify(movies)}}`);
     }
     
 }); 
+
+const undef = (a,b)=>{
+    if (typeof(a) == 'undefined'){
+        return b
+    }
+    else{
+       return a
+    }
+}
+router.get('/movies/update/:id', function(req, res) {
+    var d = req.params.id
+    let Nrating=req.query.rating;
+    let Ntitle=req.query.title;
+    let Nyear=req.query.year;
+    movies[d].title = undef(Ntitle,movies[d].title)
+    movies[d].year = undef(Nyear,movies[d].year)
+    movies[d].rating = undef(Nrating,movies[d].rating)
+    res.send(`{ data:${JSON.stringify(movies[d])}}`);
+});

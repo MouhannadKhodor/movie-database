@@ -139,3 +139,16 @@ router.get('/movies/add', function(req, res) {
     }
 });
 
+router.get('/movies/delete/:id', function(req, res) {
+    const mvs = movies
+    var d = req.params.id
+    if (d > mvs.length -1){
+        res.status(404)
+       res.send( {status:404, error:true, message:'the movie <ID> does not exist'})
+    }
+    else{
+        mvs.splice(d,1);
+        res.send(`{status:200, data:${JSON.stringify(mvs)}}`);
+    }
+    
+}); 

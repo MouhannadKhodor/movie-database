@@ -96,3 +96,14 @@ router.get('/movies/read/:v', function(req, res) {
     } 
    
 });
+
+router.get('/movies/read/id/:id', function(req, res) {
+    var id = req.params.id
+    if (id > movies.length-1){
+        res.status(404)
+        res.send(`{status:404, error:true, message:'the movie ${id} does not exist'}`);
+    }
+    else{
+    res.send(`{status:200, data:${JSON.stringify(movies[id])}}`);
+}
+ });

@@ -51,3 +51,26 @@ app.get('/search',(req,res) => {
     }
 });
 
+const movies = [
+    { title: 'Jaws', year: 1975, rating: 8 },
+    { title: 'Avatar', year: 2009, rating: 7.8 },
+    { title: 'Brazil', year: 1985, rating: 8 },
+    { title: 'الإرهاب والكباب‎', year: 1992, rating: 6.2 }
+]
+
+router.get('/movies/create', function(req, res) {
+    res.send(`create`)
+});
+
+router.get('/movies/read', function(req, res) {
+    const obj = movies
+   res.send(`{status:200, data:${JSON.stringify(obj)}}`);
+});
+
+router.get('/movies/udpate', function(req, res) {
+    res.send(`udpate`)
+});
+
+router.get('/movies/delete', function(req, res) {
+    res.send(`delete`)
+});

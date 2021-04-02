@@ -63,8 +63,7 @@ router.get('/movies/create', function(req, res) {
 });
 
 router.get('/movies/read', function(req, res) {
-    const obj = movies
-   res.send(`{status:200, data:${JSON.stringify(obj)}}`);
+   res.send(`{status:200, data:${JSON.stringify(movies)}}`);
 });
 
 router.get('/movies/udpate', function(req, res) {
@@ -73,4 +72,27 @@ router.get('/movies/udpate', function(req, res) {
 
 router.get('/movies/delete', function(req, res) {
     res.send(`delete`)
+});
+
+router.get('/movies/read/:v', function(req, res) {
+    var v = req.params.v
+    if(v == "by-date"){
+       const sorted =  movies.sort(function (a, b) {
+            var dateA = new Date(a.year), dateB = new Date(b.year)
+            return dateA - dateB
+        });
+        res.send(`{status:200, data:${JSON.stringify(sorted)}}`);
+    }
+    else if (v == "by-rating"){
+        const sorted =  movies.sort(function (a, b) {
+            var valA = a.rating, valB = b.rating
+            return valA - valB
+        });
+        res.send(`{status:200, data:${JSON.stringify(sorted)}}`);
+    }
+    else if (v == "by-title"){
+        const sorted =  movies.sort((a,b) => (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0))
+        res.send(`{status:200, data:${JSON.stringify(sorted)}}`);
+    } 
+   
 });

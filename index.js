@@ -109,7 +109,7 @@ router.get('/movies/read/id/:id', function(req, res) {
 }
  });
 
-router.get('/movies/add', function(req, res) {
+router.post('/movies', function(req, res) {
     if(req.query.title && req.query.year && isNaN(req.query.year)===false && req.query.year.length===4 && req.query.rating){
      
 
@@ -140,7 +140,7 @@ router.get('/movies/add', function(req, res) {
     }
 });
 
-router.get('/movies/delete/:id', function(req, res) {
+router.delete('/movies/:id', function(req, res) {
     var d = req.params.id
     if (d > movies.length -1){
         res.status(404)
@@ -161,7 +161,7 @@ const undef = (a,b)=>{
        return a
     }
 }
-router.get('/movies/update/:id', function(req, res) {
+router.put('/movies/:id', function(req, res) {
     var d = req.params.id
     let Nrating=req.query.rating;
     let Ntitle=req.query.title;
